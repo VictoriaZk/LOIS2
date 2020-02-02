@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src='main.js'></script>
+    <title>Title</title>
+</head>
+<body>
+<div class="centered">
+    <b style="margin: 0; font-size: 16pt">Введите формулу:</b>
+    <input type="text" id="formula" placeholder="Формула" style="width:600px; margin: 0 0 4px 0">
+    <br>
+    <button onclick="main()">
+        Построить СКНФ
+    </button>
+    <br>
+    <span id="error"></span>
+
+    <table id="truthTable" cellspacing="0" border="1" style="margin: 20px 0;">
+        <tbody>
+        </tbody>
+    </table>
+
+    <span id="answer" style="margin: 20px; size: 12pt"></span>
+</div>
+</body>
+</html>
