@@ -2,26 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script src='main.js'></script>
-    <title>Title</title>
+    <title>Analyzer</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="main.js" type="text/javascript" charset="utf-8"></script>
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
 </head>
 <body>
-<div class="centered">
-    <b style="margin: 0; font-size: 16pt">Введите формулу:</b>
-    <input type="text" id="formula" placeholder="Формула" style="width:600px; margin: 0 0 4px 0">
-    <br>
-    <button onclick="main()">
-        Построить СКНФ
-    </button>
+<div class="panel animated" id="panel">
+    <div class="group">
+        <input type="text" id="formula" required="required"/>
+        <label for="formula">Формула</label>
+        <div class="bar"></div>
+        <button onclick="generate()">
+            Сгенерировать
+        </button>
+        <button onclick="main()">
+            Построить таблицу истинности
+        </button>
+    </div>
     <br>
     <span id="error"></span>
-
     <table id="truthTable" cellspacing="0" border="1" style="margin: 20px 0;">
-        <tbody>
+        <tbody id="tableA">
         </tbody>
     </table>
-
-    <span id="answer" style="margin: 20px; size: 12pt"></span>
+    <div class="group">
+        <input type="text" id="answer" required="required"/>
+        <label for="formula">Составьте СКНФ по таблице</label>
+        <div class="bar"></div>
+        <button id="l" onclick="checkAnswer()">
+            Проверить
+        </button>
+        <span id="result"></span>
+    </div>
 </div>
 </body>
 </html>
