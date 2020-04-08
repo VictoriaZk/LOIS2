@@ -335,11 +335,41 @@ function printTruthTable(subformuls) {
             td.appendChild(document.createTextNode(subformulsArr[lineIndex][key]));
             row.appendChild(td);
         }
+        let td = document.createElement(TD);
+        button = document.createElement('BUTTON');
+        buttonClick = document.createAttribute("onclick");
+        buttonClick.value = `viewIndex(${lineIndex})`;
+        button.setAttributeNode(buttonClick);
+        td.appendChild(button);
+        row.appendChild(td);
         tbody.appendChild(row);
-
     }
 }
 
+function viewIndex(lineIndex){
+    output = document.getElementById('answer');
+    let subformul = [];
+    for(let i = 0; i < variables.length; i++){
+        if(linesValuesArr[lineIndex][variables[i]] === 1){
+            subformul.push(`(!${variables[i]})`);
+        }else{
+            subformul.push(`${variables[i]}`);
+        }
+    }
+    let outputString = subformul.join('|');
+    let neg = new RegExp("^\\(![A-Z]\\)$")
+    console.log(outputString.match(neg));
+    console.log(outputString.search(neg));
+    if(outputString.length > 1 && outputString.match(neg) == null){
+        outputString = `(${outputString})`;
+    }
+
+    if(output.value != ""){
+        output.value += '&' + outputString;
+    }else {
+        output.value = outputString;
+    }
+}
 
 function newFormula() {
     var type = Math.floor(Math.random() * (4 - 1 + 1)) + 1;

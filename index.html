@@ -27,14 +27,22 @@
         </tbody>
     </table>
     <div class="group">
-        <input type="text" id="answer" required="required"/>
+        (<input disabled="true" type="text" id="answer" required="required"/>)
         <label for="formula">Составьте СКНФ по таблице</label>
         <div class="bar"></div>
         <button id="l" onclick="checkAnswer()">
             Проверить
+        </button>
+        <button id="clean" onclick="clean()">
+            Очистить
         </button>
         <span id="result"></span>
     </div>
 </div>
 </body>
 </html>
+<script>
+    function clean(){
+        document.getElementById("answer").value = '';
+    }
+</script>
