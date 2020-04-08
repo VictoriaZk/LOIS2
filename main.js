@@ -30,9 +30,11 @@ var CLOSING_BRACKET = ")";
 var Formula = "";
 var testAnswer = "";
 var disjuncts = [];
+var numFormulsAnswer;
 
 
 function main() {
+    numFormulsAnswer = 0;
     document.getElementById("error").innerHTML = "";
     if (truthTable.length !== 0) {
         linesNumber = 0;
@@ -121,6 +123,8 @@ function buildSKNF(formula) {
         return answer;
     } else {
         answer = "Невозможно построить СКНФ для данной формулы";
+        document.getElementById("result").innerHTML = "Невозможно построить СКНФ для данной формулы";
+        document.getElementById("l").disabled = true;
     }
 
 }
@@ -356,18 +360,24 @@ function viewIndex(lineIndex){
             subformul.push(`${variables[i]}`);
         }
     }
-    let outputString = subformul.join('|');
-    let neg = new RegExp("^\\(![A-Z]\\)$")
-    console.log(outputString.match(neg));
-    console.log(outputString.search(neg));
-    if(outputString.length > 1 && outputString.match(neg) == null){
-        outputString = `(${outputString})`;
-    }
-
-    if(output.value != ""){
-        output.value += '&' + outputString;
+    let outputString = create(subformul);
+    numFormulsAnswer++;
+    if(numFormulsAnswer - 1 > 0){
+        if(numFormulsAnswer - 1 > 1){
+            output.value = output.value.slice(0, output.value.length - 1) + '&' + outputString + ")";
+        }else{
+            output.value = `(${output.value}&${outputString})`;
+        }
     }else {
         output.value = outputString;
+    }
+}
+
+function create(operands){
+    if(operands.length >= 2){
+        return `(${operands[0]}|${create(operands.splice(1, operands.length - 1))})`;
+    }else{
+        return operands[0];
     }
 }
 
@@ -489,6 +499,11 @@ function checkNegation(formula) {
         }
     }
     return true;
+}
+
+function clean(){
+    document.getElementById("answer").value = '';
+    numFormulsAnswer = 0;
 }
 
 
