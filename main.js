@@ -31,10 +31,12 @@ var Formula = "";
 var testAnswer = "";
 var disjuncts = [];
 var numFormulsAnswer;
+var answerFullForlmul = [];
 
 
 function main() {
     numFormulsAnswer = 0;
+    answerFullForlmul = [];
     document.getElementById("error").innerHTML = "";
     if (truthTable.length !== 0) {
         linesNumber = 0;
@@ -360,22 +362,14 @@ function viewIndex(lineIndex){
             subformul.push(`${variables[i]}`);
         }
     }
-    let outputString = create(subformul);
-    numFormulsAnswer++;
-    if(numFormulsAnswer - 1 > 0){
-        if(numFormulsAnswer - 1 > 1){
-            output.value = output.value.slice(0, output.value.length - 1) + '&' + outputString + ")";
-        }else{
-            output.value = `(${output.value}&${outputString})`;
-        }
-    }else {
-        output.value = outputString;
-    }
+    let outputString = create(subformul, '|');
+    answerFullForlmul.push(outputString);
+    output.value = create(answerFullForlmul, '&')
 }
 
-function create(operands){
+function create(operands, separator){
     if(operands.length >= 2){
-        return `(${operands[0]}|${create(operands.splice(1, operands.length - 1))})`;
+        return `(${operands[0]}${separator}${create(operands.slice(1, operands.length), separator)})`;
     }else{
         return operands[0];
     }
@@ -504,6 +498,7 @@ function checkNegation(formula) {
 function clean(){
     document.getElementById("answer").value = '';
     numFormulsAnswer = 0;
+    answerFullForlmul = [];
 }
 
 
